@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:text/r.g.dart';
 import 'package:vector_math/vector_math.dart' as Vector;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';

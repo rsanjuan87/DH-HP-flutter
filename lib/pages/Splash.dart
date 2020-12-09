@@ -17,39 +17,58 @@ class Splash extends StatelessWidget {
       init: SplashController(),
       builder: (_) => Scaffold(
           backgroundColor: Colors.lightBlue,
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  A.app_name,
-                  style: TextStyle(fontSize: 100),
+          body: Stack(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Wave(
+                  size: size,
+                  xOffset: 0,
+                  yOffset: 0,
+                  duration: 2,
+                  image: R.image.bubbles_jpg().assetName,
                 ),
-                Image.asset(R.image.logo().assetName),
-                Stack(
-                  children: <Widget>[
-                    new Wave(
-                      size: size,
-                      xOffset: 0,
-                      yOffset: 0,
-                      duration: 2,
-                      image: R.image.bubbles_jpg().assetName,
-                    ),
-                    new Opacity(
-                      opacity: .7,
-                      child: new Wave(
-                        size: size,
-                        xOffset: 530,
-                        yOffset: 10,
-                        duration: 5,
-                        image: R.image.whater_jpg().assetName,
-                      ),
-                    ),
-                  ],
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Opacity(
+                  opacity: .7,
+                  child: Wave(
+                    size: size,
+                    xOffset: 530,
+                    yOffset: 10,
+                    duration: 5,
+                    image: R.image.whater_jpg().assetName,
+                  ),
                 ),
-              ],
-            ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Image.asset(R.image.logo().assetName),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Opacity(
+                  opacity: .7,
+                  child: Text(
+                    A.app_name + "\n 2.0",
+                    textAlign: TextAlign.center,
+                    style:
+                        TextStyle(fontSize: 100, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Opacity(
+                  opacity: .7,
+                  child: Text(
+                    "Reynaldo San Juan \n http://github.com/rsanjuan87 \n",
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
           )),
     );
   }
