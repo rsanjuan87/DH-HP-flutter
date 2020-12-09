@@ -1,0 +1,25 @@
+name: dh_hp
+description: Diseño Hidráulico-Hidrológico de Puentes.
+publish_to: none
+version: 1.0.0+1
+environment:
+  sdk: '>=2.7.0 <3.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.0
+  get: ^3.22.2
+  r_dart_library:
+    git:
+      url: https://github.com/YK-Unit/r_dart_library.git
+      ref: 0.2.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
+flr:
+  core_version: 3.1.0
+  dartfmt_line_length: 80
+  assets: []
+  fonts: []
