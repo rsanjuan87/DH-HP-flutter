@@ -1,5 +1,5 @@
-name: dh_hp
-description: Diseño Hidráulico-Hidrológico de Puentes.
+name: text
+description: A new Flutter application.
 publish_to: none
 version: 1.0.0+1
 environment:
@@ -18,8 +18,14 @@ dev_dependencies:
     sdk: flutter
 flutter:
   uses-material-design: true
+  assets:
+    - packages/text/assets/images/bubbles.jpg
+    - packages/text/assets/images/logo.png
+    - packages/text/assets/images/whater.jpg
 flr:
   core_version: 3.1.0
   dartfmt_line_length: 80
-  assets: []
+  assets:
+    - lib/assets/images
+    - lib/assets/texts
   fonts: []

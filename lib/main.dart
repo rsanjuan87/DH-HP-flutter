@@ -1,6 +1,6 @@
-import 'package:dh_hp/pages/Splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:text/pages/Splash.dart';
 
 void main() {
   runApp(MyApp());

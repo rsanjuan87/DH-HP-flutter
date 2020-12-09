@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
-import 'package:dh_hp/controllers/HomeController.dart';
-import 'package:dh_hp//pages/widgets/Label.dart';
+import 'package:text/controllers/HomeController.dart';
+import 'package:text/pages/widgets/Label.dart';
 
 class MainPage extends StatelessWidget {
   @override
@@ -19,4 +19,5 @@ class MainPage extends StatelessWidget {
       ),
     );
   }
+
 }
