@@ -33,4 +33,11 @@ class A {
 
   static String caudal_de_disenno =
       "Caudal de diseño: %1d3 m\u00B3/s \n Rango:[ %2d3, %3d3]";
+
+  static String pendiente = "Pendiente (m/m)";
+
+  static var error_select_cattegory = "Selecciona una categoría del vial";
+
+  static String area_muy_grande =
+      'El área de la cuenca no debe exceder los 30km²';
 }

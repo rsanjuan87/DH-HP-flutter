@@ -9,6 +9,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.0
   get: ^3.22.2
+  fluttertoast: ^3.1.0
   r_dart_library:
     git:
       url: https://github.com/YK-Unit/r_dart_library.git

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/state_manager.dart';
 import 'package:text/controllers/HomeController.dart';
 import 'package:text/gen_a/A.dart';
@@ -61,6 +62,21 @@ class MainPage extends StatelessWidget {
                 ),
               ),
               GetBuilder<HomeController>(
+                id: IDs.pendiente,
+                builder: (_) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      errorText: e.errorPendienteText,
+                      border: OutlineInputBorder(),
+                      labelText: A.pendiente,
+                    ),
+                    keyboardType: TextInputType.number,
+                    onChanged: (text) => checkPendiente(text),
+                  ),
+                ),
+              ),
+              GetBuilder<HomeController>(
                 id: IDs.presipitaciones,
                 builder: (_) => Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -117,14 +133,15 @@ class MainPage extends StatelessWidget {
                       id: IDs.categoria,
                       builder: (_) => DropdownButton<String>(
                         value: _.data.categoria,
-                        items: <String>[A.autopista, A.i_ii, A.iii_iv]
-                            .map((String value) => new DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: new Text(value),
-                                  ),
-                                ))
+                        items: <String>[A.select, A.autopista, A.i_ii, A.iii_iv]
+                            .map((String value) =>
+                        new DropdownMenuItem<String>(
+                          value: value,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: new Text(value),
+                          ),
+                        ))
                             .toList(),
                         onChanged: (text) => setCategoria(text),
                       ),
@@ -137,11 +154,12 @@ class MainPage extends StatelessWidget {
                 child: Text(
                   A.caudal_de_disenno
                       .replaceAll("%1d3",
-                          _.data.caudalCalculado().toStringAsPrecision(4))
+                      _.data.caudalCalculado().toStringAsPrecision(4))
                       .replaceAll(
-                          "%2d3", _.data.rangoMin().toStringAsPrecision(4))
+                      "%2d3", _.data.rangoMin().toStringAsPrecision(4))
                       .replaceAll(
-                          "%3d3", _.data.rangoMax().toStringAsPrecision(4)),
+                      "%3d3", _.data.rangoMax().toStringAsPrecision(4)),
+                  style: TextStyle(fontSize: 20),
                 ),
               ),
             ],
@@ -151,6 +169,9 @@ class MainPage extends StatelessWidget {
           onPressed: () {
             if (checkArea(controller.data.area.toString()) &&
                 checkLongitud(controller.data.longitud.toString()) &&
+                checkPendiente(controller.data.pendiente.toString()) &&
+                checkCategoria(controller.data.categoria) &&
+                checkIntensidad(controller.data.intensidad.toString()) &&
                 checkPresipitaciones(
                     controller.data.alturaPresipitaciones.toString())) {
               e.errorLongitudText = null;
@@ -174,10 +195,13 @@ class MainPage extends StatelessWidget {
     if (controller.data.area < 1) {
       e.errorAreaText = A.negativeNumberError;
       res = false;
+    } else if (controller.data.area > 30) {
+      e.errorAreaText = A.area_muy_grande;
+      res = false;
     } else {
       e.errorAreaText = null;
     }
-    controller.update([IDs.area]);
+    controller.update();
     return res;
   }
 
@@ -190,7 +214,7 @@ class MainPage extends StatelessWidget {
     } else {
       e.errorLongitudText = null;
     }
-    controller.update([IDs.longitud]);
+    controller.update();
     return res;
   }
 
@@ -203,7 +227,7 @@ class MainPage extends StatelessWidget {
     } else {
       e.errorPresipitacionesText = null;
     }
-    controller.update([IDs.presipitaciones]);
+    controller.update();
     return res;
   }
 
@@ -216,13 +240,39 @@ class MainPage extends StatelessWidget {
     } else {
       e.errorIntensidadText = null;
     }
-    controller.update([IDs.presipitaciones]);
+    controller.update();
     return res;
   }
 
   void setCategoria(String text) {
     controller.data.setCategoria(text);
-    controller.update([IDs.categoria]);
+    controller.update();
+  }
+
+  checkPendiente(String text) {
+    bool res = true;
+    controller.data.setPendiente(text);
+    if (controller.data.pendiente < 1) {
+      e.errorPendienteText = A.negativeNumberError;
+      res = false;
+    } else {
+      e.errorPendienteText = null;
+    }
+    controller.update();
+    return res;
+  }
+
+  bool checkCategoria(String categoria) {
+    bool res = controller.data.categoriaIndex > -1;
+    if (!res) {
+      Fluttertoast.showToast(
+        msg: A.error_select_cattegory,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 1,
+      );
+    }
+    return res;
   }
 }
 
@@ -231,4 +281,5 @@ class ErrorText {
   String errorLongitudText;
   String errorPresipitacionesText;
   String errorIntensidadText;
+  String errorPendienteText;
 }

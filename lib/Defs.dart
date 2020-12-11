@@ -8,4 +8,6 @@ class IDs {
   static final String categoria = "categoria";
 
   static final String intensidad = "intensidad";
+
+  static final String pendiente = "pendiente";
 }
