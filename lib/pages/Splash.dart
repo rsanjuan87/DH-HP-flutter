@@ -68,6 +68,17 @@ class Splash extends StatelessWidget {
                   ),
                 ),
               ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Opacity(
+                  opacity: .7,
+                  child: Text(
+                    "\n\n" + A.full_name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 38, color: Colors.black),
+                  ),
+                ),
+              ),
             ],
           )),
     );
