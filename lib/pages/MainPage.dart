@@ -132,6 +132,18 @@ class MainPage extends StatelessWidget {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  A.caudal_de_disenno
+                      .replaceAll("%1d3",
+                          _.data.caudalCalculado().toStringAsPrecision(4))
+                      .replaceAll(
+                          "%2d3", _.data.rangoMin().toStringAsPrecision(4))
+                      .replaceAll(
+                          "%3d3", _.data.rangoMax().toStringAsPrecision(4)),
+                ),
+              ),
             ],
           ),
         ),

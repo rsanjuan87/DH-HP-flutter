@@ -30,4 +30,16 @@ class ProjectData {
       categoriaIndex = 2;
     categoria = _;
   }
+
+  double caudalCalculado() {
+    return 0;
+  }
+
+  double rangoMin() {
+    return 0;
+  }
+
+  double rangoMax() {
+    return 0;
+  }
 }

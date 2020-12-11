@@ -29,5 +29,8 @@ class A {
   static String emptyField = "Debe insertar este dato";
 
   static String negativeNumberError =
-      "Debe insertar un número valido mayor que cero";
+      "Debe insertar un número válido mayor que cero";
+
+  static String caudal_de_disenno =
+      "Caudal de diseño: %1d3 m\u00B3/s \n Rango:[ %2d3, %3d3]";
 }
