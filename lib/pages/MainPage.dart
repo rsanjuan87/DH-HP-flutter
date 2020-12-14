@@ -94,12 +94,16 @@ class MainPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Stack(
-                  alignment: const Alignment(1.0, 1.0),
+                  alignment: Alignment.topRight,
                   children: <Widget>[
                     GetBuilder<HomeController>(
                       id: IDs.intensidad,
                       builder: (_) => TextField(
+                        controller: TextEditingController(
+                          text: _.data.intensidad.toStringAsFixed(3),
+                        ),
                         decoration: InputDecoration(
+                          errorText: e.errorIntensidadText,
                           border: OutlineInputBorder(),
                           labelText: A.intensidad,
                         ),
@@ -108,14 +112,19 @@ class MainPage extends StatelessWidget {
                           checkIntensidad(text);
                         },
                         readOnly: true,
-                        onTap: () => _.selectIntensidad(),
+                        onTap: () {
+                          selectIntensidad();
+                        },
                       ),
                     ),
-                    new FlatButton(
-                        onPressed: () {
-                          _.selectIntensidad();
+                    InkWell(
+                        onTap: () {
+                          selectIntensidad();
                         },
-                        child: new Text(A.select))
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.my_location_sharp),
+                        ))
                   ],
                 ),
               ),
@@ -154,11 +163,11 @@ class MainPage extends StatelessWidget {
                 child: Text(
                   A.caudal_de_disenno
                       .replaceAll("%1d3",
-                      _.data.caudalCalculado().toStringAsPrecision(4))
+                      _.data.caudalCalculado().toStringAsFixed(3))
                       .replaceAll(
-                      "%2d3", _.data.rangoMin().toStringAsPrecision(4))
+                      "%2d3", _.data.rangoMin().toStringAsFixed(3))
                       .replaceAll(
-                      "%3d3", _.data.rangoMax().toStringAsPrecision(4)),
+                      "%3d3", _.data.rangoMax().toStringAsFixed(3)),
                   style: TextStyle(fontSize: 20),
                 ),
               ),
@@ -180,10 +189,10 @@ class MainPage extends StatelessWidget {
               //TODO GOTO NEXT
               print("goto next");
             } else {
-              print("need fill");
+              print("need fill before");
             }
           },
-          child: Icon(Icons.check),
+          child: Icon(Icons.navigate_next),
         ),
       ),
     );
@@ -273,6 +282,21 @@ class MainPage extends StatelessWidget {
       );
     }
     return res;
+  }
+
+  selectIntensidad() {
+    if (checkArea(controller.data.area.toString()) &&
+        checkLongitud(controller.data.longitud.toString()) &&
+        checkPendiente(controller.data.pendiente.toString()) &&
+        checkPresipitaciones(controller.data.alturaPresipitaciones.toString()))
+      controller.selectIntensidad();
+    else
+      Fluttertoast.showToast(
+        msg: A.debe_insertar_algunos_datos_antes,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 1,
+      );
   }
 }
 

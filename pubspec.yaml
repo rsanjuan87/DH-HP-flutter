@@ -21,6 +21,7 @@ flutter:
   uses-material-design: true
   assets:
     - packages/text/assets/images/bubbles.jpg
+    - packages/text/assets/images/intensidad.png
     - packages/text/assets/images/logo.png
     - packages/text/assets/images/whater.jpg
 flr:

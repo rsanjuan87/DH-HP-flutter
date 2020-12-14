@@ -6,16 +6,16 @@
 //
 
 // ignore: unused_import
-import 'package:flutter/services.dart' show rootBundle;
-
-// ignore: unused_import
 import 'package:flutter/widgets.dart';
 
 // ignore: unused_import
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 // ignore: unused_import
 import 'package:path/path.dart' as path;
+
+// ignore: unused_import
+import 'package:flutter_svg/flutter_svg.dart';
 
 // ignore: unused_import
 import 'package:r_dart_library/asset_svg.dart';
@@ -103,6 +103,11 @@ class _R_Image_AssetResource {
   final bubbles_jpg =
       const AssetResource("assets/images/bubbles.jpg", packageName: R.package);
 
+  /// asset: lib/assets/images/intensidad.png
+  // ignore: non_constant_identifier_names
+  final intensidad = const AssetResource("assets/images/intensidad.png",
+      packageName: R.package);
+
   /// asset: lib/assets/images/logo.png
   // ignore: non_constant_identifier_names
   final logo =
@@ -135,6 +140,12 @@ class _R_Image {
   // ignore: non_constant_identifier_names
   AssetImage bubbles_jpg() {
     return AssetImage(asset.bubbles_jpg.keyName);
+  }
+
+  /// asset: lib/assets/images/intensidad.png
+  // ignore: non_constant_identifier_names
+  AssetImage intensidad() {
+    return AssetImage(asset.intensidad.keyName);
   }
 
   /// asset: lib/assets/images/logo.png
