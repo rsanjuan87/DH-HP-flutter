@@ -5,7 +5,6 @@ class CustomDataTable<T> extends StatefulWidget {
   final T fixedCornerCell;
   final List<T> fixedColCells;
   final List<T> fixedRowCells;
-  final T fixedTopLeftCell;
   final List<List<T>> rowsCells;
   final Widget Function(T data) cellBuilder;
   final double fixedColWidth;
@@ -18,7 +17,6 @@ class CustomDataTable<T> extends StatefulWidget {
     this.fixedCornerCell,
     this.fixedColCells,
     this.fixedRowCells,
-    this.fixedTopLeftCell,
     @required this.rowsCells,
     this.cellBuilder,
     this.fixedColWidth = 55.0,

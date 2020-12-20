@@ -37,11 +37,12 @@ class SectionsPage extends StatelessWidget {
               A.Rim,
               A.EAm,
               A.Qim3s,
-              A.QEm3s
+              A.QEm3s,
             ],
             fixedCornerCell: A.seccion,
             cellBuilder: (data) {
-              return Text('$data', style: TextStyle());
+              return Text(data is double ? data.toStringAsFixed(3) : '$data',
+                  style: TextStyle());
             },
           ),
         ),
@@ -220,13 +221,25 @@ class SectionsPage extends StatelessWidget {
     return list;
   }
 
-  List<List<String>> _buildData() {
-    List<List<String>> list = List<List<String>>();
+  List<List<double>> _buildData() {
+    List<List<double>> list = List<List<double>>();
 
     for (int i = 0; i < controller.data.sectionsCount; i++) {
-      List<String> t = new List();
+      List<double> t = new List();
       for (int j = 0; j < 7; j++) {
-        t.add(pow(i + j, .2).toStringAsFixed(3));
+        switch (j) {
+          case 4:
+            t.add(t[1] + (i == 0 ? 0 : list[i - 1][4]));
+            break;
+          case 6:
+            t.add(t[5] + (i == 0 ? 0 : list[i - 1][6]));
+            break;
+
+
+          default:
+            t.add(pow(i + j, .2));
+            break;
+        }
       }
       list.add(t);
     }
