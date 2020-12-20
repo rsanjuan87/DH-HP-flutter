@@ -2,8 +2,7 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:text/models/ProjectData.dart';
 import 'package:text/pages/Intensidad.dart';
-import 'package:text/pages/MainPage.dart';
-import 'package:text/pages/Splash.dart';
+import 'package:text/pages/SectionsPage.dart';
 
 class HomeController extends GetxController {
   ProjectData data;
@@ -39,5 +38,9 @@ class HomeController extends GetxController {
 
   void goMainPage() {
     Get.back<double>(result: data.intensidad);
+  }
+
+  void goSectionsPage() {
+    Get.to(SectionsPage(this), transition: Transition.rightToLeft);
   }
 }

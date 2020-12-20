@@ -3,6 +3,8 @@ import 'package:text/gen_a/A.dart';
 class ProjectData {
   double area = 0;
 
+  int sectionsCount = 35; //todo poner en 0;
+
   void setArea(String _) => area = double.tryParse(_) ?? 0;
 
   double pendiente = 0;

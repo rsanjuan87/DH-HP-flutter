@@ -162,38 +162,40 @@ class MainPage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   A.caudal_de_disenno
-                      .replaceAll("%1d3",
-                      _.data.caudalCalculado().toStringAsFixed(3))
                       .replaceAll(
-                      "%2d3", _.data.rangoMin().toStringAsFixed(3))
-                      .replaceAll(
-                      "%3d3", _.data.rangoMax().toStringAsFixed(3)),
+                          "%1d3", _.data.caudalCalculado().toStringAsFixed(3))
+                      .replaceAll("%2d3", _.data.rangoMin().toStringAsFixed(3))
+                      .replaceAll("%3d3", _.data.rangoMax().toStringAsFixed(3)),
                   style: TextStyle(fontSize: 20),
                 ),
               ),
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            if (checkArea(controller.data.area.toString()) &&
-                checkLongitud(controller.data.longitud.toString()) &&
-                checkPendiente(controller.data.pendiente.toString()) &&
-                checkCategoria(controller.data.categoria) &&
-                checkIntensidad(controller.data.intensidad.toString()) &&
-                checkPresipitaciones(
-                    controller.data.alturaPresipitaciones.toString())) {
-              e.errorLongitudText = null;
-              e.errorAreaText = null;
-              _.update([]);
-              //TODO GOTO NEXT
-              print("goto next");
-            } else {
-              print("need fill before");
-            }
-          },
-          child: Icon(Icons.navigate_next),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Stack(children: <Widget>[
+            Align(
+              alignment: Alignment.bottomRight,
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  if (checkAll()) {
+                    e.errorLongitudText = null;
+                    e.errorAreaText = null;
+                    _.update([]);
+                    print("goto next");
+                    _.goSectionsPage();
+                  } else {
+                    print("need fill before");
+                  }
+                },
+                icon: Icon(Icons.navigate_next),
+                label: Text(A.siguiente),
+              ),
+            ),
+          ]),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }
@@ -297,6 +299,16 @@ class MainPage extends StatelessWidget {
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
       );
+  }
+
+  bool checkAll() {
+    return checkArea(controller.data.area.toString()) &&
+        checkLongitud(controller.data.longitud.toString()) &&
+        checkPendiente(controller.data.pendiente.toString()) &&
+        checkCategoria(controller.data.categoria) &&
+        checkIntensidad(controller.data.intensidad.toString()) &&
+        checkPresipitaciones(
+            controller.data.alturaPresipitaciones.toString());
   }
 }
 

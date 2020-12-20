@@ -51,4 +51,36 @@ class A {
 
   static final String tiempo_de_concentracion =
       'Tiempo de concentración: %1d3 mm/min ';
+
+  static final String sections = 'Secciones';
+
+  static final String siguiente = 'Siguiente';
+
+  static final String clear = 'Limpiar';
+
+  static final String reset = 'Reiniciar';
+
+  static final String no_se_cumple_condicion_de_parada =
+      'No se cumple la condición de parada';
+
+  static final String seleccione_cuase_principal = 'Seleccione cause principal';
+
+  static final String seleccione_secciones_entre_estribos =
+      'Seleccione secciones entre estribos';
+
+  static final String seccion = 'Seccion';
+
+  static final String Ni = 'Ni';
+
+  static final String Aim3 = 'Aim\u00B2';
+
+  static final String Pim = 'Pi(m)';
+
+  static final String Rim = 'Ri(m)';
+
+  static final String EAm = '∑A(m)';
+
+  static final String Qim3s = 'Qi(m\u00B3/s)';
+
+  static final String QEm3s = '∑Q(m\u00B3/s)';
 }
