@@ -100,12 +100,13 @@ class IntensidadPage extends StatelessWidget {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             if (checkIntensidadEstimada(_.data.intensidad.toString()))
               _.goMainPage();
           },
-          child: Icon(Icons.check),
+          label: Text(A.listo),
+          icon: Icon(Icons.check),
         ),
       ),
     );

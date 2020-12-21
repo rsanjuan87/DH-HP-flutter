@@ -83,4 +83,6 @@ class A {
   static final String Qim3s = 'Qi(m\u00B3/s)';
 
   static final String QEm3s = '∑Q(m\u00B3/s)';
+
+  static final String listo = 'Listo';
 }
