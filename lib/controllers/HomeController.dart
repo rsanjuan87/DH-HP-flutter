@@ -27,7 +27,7 @@ class HomeController extends GetxController {
 
   Future<void> selectIntensidad() async {
     data.intensidad =
-        await Get.to(IntensidadPage(this), transition: Transition.fadeIn);
+        await Get.to(IntensidadPage(this), transition: Transition.fadeIn) ?? 0;
     update();
   }
 

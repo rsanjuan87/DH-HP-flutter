@@ -1,10 +1,13 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:text/controllers/HomeController.dart';
 import 'package:text/gen_a/A.dart';
+import 'package:text/pages/widgets/SanWidgets.dart';
 
 import 'widgets/CustomDataTable.dart';
 
@@ -21,194 +24,181 @@ class SectionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       init: controller,
-      builder: (_) => Scaffold(
-        appBar: AppBar(
-          title: Text(A.sections),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.only(bottom: 250),
-          child: CustomDataTable(
-            rowsCells: _buildData(),
-            fixedColCells: sectionsList(_.data.sectionsCount),
-            fixedRowCells: [
-              A.Ni,
-              A.Aim3,
-              A.Pim,
-              A.Rim,
-              A.EAm,
-              A.Qim3s,
-              A.QEm3s,
-            ],
-            fixedCornerCell: A.seccion,
-            cellBuilder: (data) {
-              return Text(data is double ? data.toStringAsFixed(3) : '$data',
-                  style: TextStyle());
-            },
-          ),
-        ),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.all(8.0),
+      builder: (_) => CollapsingPagefold(
+        context,
+        title: A.sections,
+        center: Padding(
+          padding: const EdgeInsets.only(bottom: 12),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              CustomDataTable(
+                rowsCells: _buildData(),
+                fixedColCells: sectionsList(_.data.sectionsCount),
+                fixedRowCells: [
+                  A.Ni,
+                  A.Aim3,
+                  A.Pim,
+                  A.Rim,
+                  A.EAm,
+                  A.Qim3s,
+                  A.QEm3s,
+                ],
+                fixedCornerCell: A.seccion,
+                cellBuilder: (data) {
+                  return Text(
+                      data is double ? data.toStringAsFixed(3) : '$data',
+                      style: TextStyle());
+                },
+              ),
+              Spacer(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 60),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            A.caudal_de_disenno
-                                .replaceAll("%1d3",
-                                    _.data.caudalCalculado().toStringAsFixed(3))
-                                .replaceAll("%2d3",
-                                    _.data.rangoMin().toStringAsFixed(3))
-                                .replaceAll("%3d3",
-                                    _.data.rangoMax().toStringAsFixed(3))
-                                .replaceAll("\n", ''),
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ),
-                        Text(
-                          A.no_se_cumple_condicion_de_parada,
-                          style: TextStyle(color: Colors.red),
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                A.caudal_de_disenno
+                                    .replaceAll(
+                                        "%1d3",
+                                        _.data
+                                            .caudalCalculado()
+                                            .toStringAsFixed(3))
+                                    .replaceAll("%2d3",
+                                        _.data.rangoMin().toStringAsFixed(3))
+                                    .replaceAll("%3d3",
+                                        _.data.rangoMax().toStringAsFixed(3))
+                                    .replaceAll("\n", ''),
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ),
+                            Text(
+                              A.no_se_cumple_condicion_de_parada,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ],
                         ),
                       ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Row(
+                        children: [
+                          Text(A.seleccione_cuase_principal),
+                          Spacer(),
+                          DropdownButton<String>(
+                            items: (sectionsList(_.data.sectionsCount))
+                                .map((String value) {
+                              return new DropdownMenuItem<String>(
+                                value: value,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: new Text(value),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (text) => {
+                              //todo set cause principal min
+                            },
+                          ),
+                          Text('..'),
+                          DropdownButton<String>(
+                            items: (sectionsList(_.data.sectionsCount))
+                                .map((String value) {
+                              return new DropdownMenuItem<String>(
+                                value: value,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: new Text(value),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (text) => {
+                              //todo set cause principal min
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Row(
+                        children: [
+                          Text(A.seleccione_secciones_entre_estribos),
+                          Spacer(),
+                          DropdownButton<String>(
+                            items: (sectionsList(_.data.sectionsCount))
+                                .map((String value) {
+                              return new DropdownMenuItem<String>(
+                                value: value,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: new Text(value),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (text) => {
+                              //todo set cause principal min
+                            },
+                          ),
+                          Text('..'),
+                          DropdownButton<String>(
+                            items: (sectionsList(_.data.sectionsCount))
+                                .map((String value) {
+                              return new DropdownMenuItem<String>(
+                                value: value,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: new Text(value),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (text) => {
+                              //todo set cause principal min
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    CmdButton(
+                      text: A.reset_sections,
+                      accentColor: Colors.red,
+                      icon: CupertinoIcons.delete,
+                      backColor: Theme.of(context).dialogBackgroundColor,
+                      onTap: () {
+                        if (false) {
+                          print("goto next");
+                          _.goSectionsPage();
+                        } else {
+                          print("need fill before");
+                        }
+                      },
                     ),
                   ],
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Row(
-                    children: [
-                      Text(A.seleccione_cuase_principal),
-                      Spacer(),
-                      DropdownButton<String>(
-                        items: (sectionsList(_.data.sectionsCount))
-                            .map((String value) {
-                          return new DropdownMenuItem<String>(
-                            value: value,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: new Text(value),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (text) => {
-                          //todo set cause principal min
-                        },
-                      ),
-                      Text('..'),
-                      DropdownButton<String>(
-                        items: (sectionsList(_.data.sectionsCount))
-                            .map((String value) {
-                          return new DropdownMenuItem<String>(
-                            value: value,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: new Text(value),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (text) => {
-                          //todo set cause principal min
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Row(
-                    children: [
-                      Text(A.seleccione_secciones_entre_estribos),
-                      Spacer(),
-                      DropdownButton<String>(
-                        items: (sectionsList(_.data.sectionsCount))
-                            .map((String value) {
-                          return new DropdownMenuItem<String>(
-                            value: value,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: new Text(value),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (text) => {
-                          //todo set cause principal min
-                        },
-                      ),
-                      Text('..'),
-                      DropdownButton<String>(
-                        items: (sectionsList(_.data.sectionsCount))
-                            .map((String value) {
-                          return new DropdownMenuItem<String>(
-                            value: value,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: new Text(value),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (text) => {
-                          //todo set cause principal min
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Stack(children: <Widget>[
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: FloatingActionButton.extended(
-                      heroTag: A.siguiente,
-                      onPressed: () {
-                        if (false) {
-                          print("goto next");
-                          _.goSectionsPage();
-                        } else {
-                          print("need fill before");
-                        }
-                      },
-                      icon: Icon(Icons.navigate_next),
-                      label: Text(A.siguiente),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: FloatingActionButton.extended(
-                      heroTag: A.reset,
-                      onPressed: () {
-                        if (false) {
-                          print("goto next");
-                          _.goSectionsPage();
-                        } else {
-                          print("need fill before");
-                        }
-                      },
-                      icon: Icon(Icons.delete_outlined),
-                      label: Text(A.clear),
-                      backgroundColor: Colors.red,
-                    ),
-                  ),
-                ]),
-              ),
             ],
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        defaultAction: SanAction(
+          Icons.navigate_next,
+          onTap: () {
+            if (false) {
+              print("goto next");
+              _.goSectionsPage();
+            } else {
+              print("need fill before");
+            }
+          },
+          text: A.done,
+        ),
       ),
     );
   }

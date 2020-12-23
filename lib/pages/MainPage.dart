@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/state_manager.dart';
 import 'package:text/controllers/HomeController.dart';
 import 'package:text/gen_a/A.dart';
+import 'package:text/pages/widgets/SanWidgets.dart';
 
 import '../Defs.dart';
 
@@ -19,184 +21,160 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       init: controller,
-      builder: (_) => Scaffold(
-        appBar: AppBar(
-          title: Text(A.app_name),
-        ),
-        body: Padding(
+      builder: (_) => CollapsingPagefold(
+        context,
+        title: A.app_name,
+        defaultAction: SanAction(Icons.navigate_next, text: A.done, onTap: () {
+          if (checkAll()) {
+            e.errorLongitudText = null;
+            e.errorAreaText = null;
+            _.update([]);
+            print("goto next");
+            _.goSectionsPage();
+          } else {
+            print("need fill before");
+          }
+        }),
+        rigth: [
+          SanAction(null, text: 'lolo'),
+          SanAction(Icons.error, text: 'lolo'),
+          SanAction(Icons.ac_unit),
+        ],
+        center: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Center(child: Text(A.initial_data)),
+                child: Center(
+                    child: Text(
+                  A.initial_data,
+                  style: TextStyle(fontSize: 20),
+                )),
               ),
               GetBuilder<HomeController>(
                 id: IDs.area,
                 builder: (_) => Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      errorText: e.errorAreaText,
-                      border: OutlineInputBorder(),
-                      labelText: A.area_cuenca,
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (text) => checkArea(text),
-                  ),
-                ),
-              ),
-              GetBuilder<HomeController>(
-                id: IDs.longitud,
-                builder: (_) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      errorText: e.errorLongitudText,
-                      border: OutlineInputBorder(),
-                      labelText: A.longitud_del_rio,
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (text) => checkLongitud(text),
-                  ),
-                ),
-              ),
-              GetBuilder<HomeController>(
-                id: IDs.pendiente,
-                builder: (_) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      errorText: e.errorPendienteText,
-                      border: OutlineInputBorder(),
-                      labelText: A.pendiente,
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (text) => checkPendiente(text),
-                  ),
-                ),
-              ),
-              GetBuilder<HomeController>(
-                id: IDs.presipitaciones,
-                builder: (_) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      errorText: e.errorPresipitacionesText,
-                      border: OutlineInputBorder(),
-                      labelText: A.altura_resipitaciones,
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (text) => checkPresipitaciones(text),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Stack(
-                  alignment: Alignment.topRight,
-                  children: <Widget>[
-                    GetBuilder<HomeController>(
-                      id: IDs.intensidad,
-                      builder: (_) => TextField(
-                        controller: TextEditingController(
-                          text: _.data.intensidad.toStringAsFixed(3),
+                          child: Edit(
+                              label: A.area_cuenca,
+                              onChanged: (text) => checkArea(text),
+                              errorText: e.errorAreaText),
                         ),
-                        decoration: InputDecoration(
-                          errorText: e.errorIntensidadText,
-                          border: OutlineInputBorder(),
-                          labelText: A.intensidad,
-                        ),
-                        keyboardType: TextInputType.number,
-                        onChanged: (text) {
-                          checkIntensidad(text);
-                        },
-                        readOnly: true,
-                        onTap: () {
-                          selectIntensidad();
-                        },
-                      ),
-                    ),
-                    InkWell(
-                        onTap: () {
-                          selectIntensidad();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.my_location_sharp),
-                        ))
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    Padding(
+                  ),
+                  GetBuilder<HomeController>(
+                    id: IDs.longitud,
+                    builder: (_) => Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        A.categoria,
+                      child: Edit(
+                        errorText: e.errorLongitudText,
+                        label: A.longitud_del_rio,
+                        keyboardType: TextInputType.number,
+                        onChanged: (text) => checkLongitud(text),
                       ),
                     ),
-                    GetBuilder<HomeController>(
-                      id: IDs.categoria,
-                      builder: (_) => DropdownButton<String>(
-                        value: _.data.categoria,
-                        items: <String>[A.select, A.autopista, A.i_ii, A.iii_iv]
-                            .map((String value) =>
-                        new DropdownMenuItem<String>(
-                          value: value,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: new Text(value),
+                  ),
+                  GetBuilder<HomeController>(
+                    id: IDs.pendiente,
+                    builder: (_) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Edit(
+                        errorText: e.errorPendienteText,
+                        label: A.pendiente,
+                        keyboardType: TextInputType.number,
+                        onChanged: (text) => checkPendiente(text),
+                      ),
+                    ),
+                  ),
+                  GetBuilder<HomeController>(
+                    id: IDs.presipitaciones,
+                    builder: (_) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Edit(
+                        errorText: e.errorPresipitacionesText,
+                        label: A.altura_resipitaciones,
+                        keyboardType: TextInputType.number,
+                        onChanged: (text) => checkPresipitaciones(text),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      alignment: Alignment.topRight,
+                      children: <Widget>[
+                        GetBuilder<HomeController>(
+                          id: IDs.intensidad,
+                          builder: (_) =>
+                              Edit(
+                                controller: TextEditingController(
+                                  text: _.data.intensidad.toStringAsFixed(3),
+                                ),
+                                errorText: e.errorIntensidadText,
+                                label: A.intensidad,
+                                keyboardType: TextInputType.number,
+                                onChanged: (text) => checkIntensidad(text),
+                                readOnly: true,
+                                onTap: () => selectIntensidad(),
+                              ),
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              selectIntensidad();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(18.0),
+                              child: Icon(Icons.my_location_sharp),
+                            )
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            A.categoria,
                           ),
-                        ))
-                            .toList(),
-                        onChanged: (text) => setCategoria(text),
-                      ),
+                        ),
+                        GetBuilder<HomeController>(
+                          id: IDs.categoria,
+                          builder: (_) => DropdownButton<String>(
+                            value: _.data.categoria,
+                            items: <String>[A.select, A.autopista, A.i_ii, A.iii_iv]
+                                .map((String value) =>
+                            new DropdownMenuItem<String>(
+                              value: value,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: new Text(value),
+                              ),
+                            ))
+                                .toList(),
+                            onChanged: (text) => setCategoria(text),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  A.caudal_de_disenno
-                      .replaceAll(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      A.caudal_de_disenno
+                          .replaceAll(
                           "%1d3", _.data.caudalCalculado().toStringAsFixed(3))
-                      .replaceAll("%2d3", _.data.rangoMin().toStringAsFixed(3))
-                      .replaceAll("%3d3", _.data.rangoMax().toStringAsFixed(3)),
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Stack(children: <Widget>[
-            Align(
-              alignment: Alignment.bottomRight,
-              child: FloatingActionButton.extended(
-                onPressed: () {
-                  if (checkAll()) {
-                    e.errorLongitudText = null;
-                    e.errorAreaText = null;
-                    _.update([]);
-                    print("goto next");
-                    _.goSectionsPage();
-                  } else {
-                    print("need fill before");
-                  }
-                },
-                icon: Icon(Icons.navigate_next),
-                label: Text(A.siguiente),
+                          .replaceAll("%2d3", _.data.rangoMin().toStringAsFixed(3))
+                          .replaceAll("%3d3", _.data.rangoMax().toStringAsFixed(3)),
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ]),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      ),
+          ),
     );
   }
 

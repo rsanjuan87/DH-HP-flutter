@@ -56,7 +56,11 @@ class A {
 
   static final String siguiente = 'Siguiente';
 
+  static final String done = 'Hecho';
+
   static final String clear = 'Limpiar';
+
+  static final String reset_sections = 'Restablecer secciones';
 
   static final String reset = 'Reiniciar';
 
@@ -85,4 +89,6 @@ class A {
   static final String QEm3s = '∑Q(m\u00B3/s)';
 
   static final String listo = 'Listo';
+
+  static final String help = 'Ayuda';
 }

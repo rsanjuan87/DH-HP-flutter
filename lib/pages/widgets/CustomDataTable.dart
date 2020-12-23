@@ -76,40 +76,49 @@ class CustomDataTableState<T> extends State<CustomDataTable<T>> {
               dataRowHeight: widget.cellHeight,
               columns: widget.fixedRowCells
                   .map((c) =>
-                      DataColumn(label: _buildChild(widget.cellWidth, c)))
+                  DataColumn(label: _buildChild(widget.cellWidth, c)))
                   .toList(),
               rows: []),
-        );
+  );
 
-  Widget _buildSubTable() => Material(
-      child: DataTable(
-          horizontalMargin: widget.cellMargin,
-          columnSpacing: widget.cellSpacing,
-          headingRowHeight: widget.cellHeight,
-          dataRowHeight: widget.cellHeight,
-          columns: widget.rowsCells.first
-              .map((c) => DataColumn(
-                  label: widget.fixedRowCells != null
-                      ? Text('')
-                      : _buildChild(widget.cellWidth, c)))
-              .toList(),
-          rows: widget.rowsCells
-              .sublist(widget.fixedRowCells == null ? 1 : 0)
-              .map((row) => DataRow(
-                  cells: row
-                      .map((c) => DataCell(_buildChild(widget.cellWidth, c)))
-                      .toList()))
-              .toList()));
+  Widget _buildSubTable() {
+    try {
+      return Material(
+          child: DataTable(
+              horizontalMargin: widget.cellMargin,
+              columnSpacing: widget.cellSpacing,
+              headingRowHeight: widget.cellHeight,
+              dataRowHeight: widget.cellHeight,
+              columns: widget.rowsCells.first
+                  .map((c) =>
+                  DataColumn(
+                      label: widget.fixedRowCells != null
+                          ? Text('')
+                          : _buildChild(widget.cellWidth, c)))
+                  .toList(),
+              rows: widget.rowsCells
+                  .sublist(widget.fixedRowCells == null ? 1 : 0)
+                  .map((row) =>
+                  DataRow(
+                      cells: row
+                          .map((c) =>
+                          DataCell(_buildChild(widget.cellWidth, c)))
+                          .toList()))
+                  .toList()));
+    } catch (e) {
+      return Spacer();
+    }
+  }
 
   Widget _buildCornerCell() =>
       widget.fixedColCells == null || widget.fixedRowCells == null
           ? SizedBox.shrink()
           : Material(
-              color: Colors.greenAccent,
-              child: DataTable(
-                  horizontalMargin: widget.cellMargin,
-                  columnSpacing: widget.cellSpacing,
-                  headingRowHeight: widget.cellHeight,
+        color: Colors.greenAccent,
+        child: DataTable(
+            horizontalMargin: widget.cellMargin,
+            columnSpacing: widget.cellSpacing,
+            headingRowHeight: widget.cellHeight,
                   dataRowHeight: widget.cellHeight,
                   columns: [
                     DataColumn(
